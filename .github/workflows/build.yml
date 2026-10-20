@@ -1,0 +1,36 @@
+name: Build APK
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: tun2socks (hev-socks5-tunnel) con NDK
+        continue-on-error: true
+        run: |
+          mkdir -p /tmp/ndkproj/jni && cd /tmp/ndkproj
+          git clone --recursive --depth 1 https://github.com/heiher/hev-socks5-tunnel.git jni/hev-socks5-tunnel
+          echo 'include $(call all-subdir-makefiles)' > jni/Android.mk
+          printf 'APP_ABI := armeabi-v7a arm64-v8a\nAPP_PLATFORM := android-24\n' > jni/Application.mk
+          "$ANDROID_NDK_HOME/ndk-build" NDK_PROJECT_PATH=/tmp/ndkproj
+          mkdir -p "$GITHUB_WORKSPACE/BhttpTunnel/app/src/main/jniLibs"
+          cp -r /tmp/ndkproj/libs/* "$GITHUB_WORKSPACE/BhttpTunnel/app/src/main/jniLibs/"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Compilar APK Android
+        run: |
+          cd BhttpTunnel
+          chmod +x gradlew 2>/dev/null || true
+          gradle assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BhttpTunnel-apk
+          path: BhttpTunnel/app/build/outputs/apk/debug/app-debug.apk

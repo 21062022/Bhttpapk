@@ -1,0 +1,13 @@
+BHTTP Tunnel - Cliente Android VPN Real (Protocolo BHTTP V2 y WS Custom)
+
+REQUISITOS Y COMPILACIÓN DEL APK:
+1) Sube este repositorio a GitHub (rama 'main' o 'master').
+2) Ve a la pestaña 'Actions' -> 'Build APK' -> 'Run workflow'.
+3) GitHub Actions compilará automáticamente con NDK el binario C de tun2socks (hev-socks5-tunnel) para armeabi-v7a y arm64-v8a y generará el archivo app-debug.apk.
+4) Descarga el artefacto BhttpTunnel-apk e instálalo en tu dispositivo Android.
+
+CONEXIÓN REAL:
+- Introduce el servidor (IP o dominio), puerto (443 para BHTTP, 80 para WS), usuario SSH y contraseña SSH.
+- En modo WS, introduce el payload con cabeceras HTTP (ej: Upgrade: websocket).
+- Pulsa CONECTAR. La app valida los datos, comprueba la conexión TCP, verifica el banner SSH-2.0-, autentica tus credenciales y monta la interfaz VpnService enrutando todo el tráfico del dispositivo por el túnel.
+- Reconexión automática con backoff exponencial (1, 2, 4, 8, 15, 30s) y cambio dinámico entre WiFi y datos móviles.

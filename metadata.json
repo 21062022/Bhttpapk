@@ -1,0 +1,8 @@
+{
+  "name": "Remix BHTTP Tunnel V2 - VPN Client \u0026 Suite",
+  "description": "Panel de control, cliente de prueba, generador de proyectos Android y servidor para el protocolo VPN BHTTP V2 y túneles WebSocket SSH.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

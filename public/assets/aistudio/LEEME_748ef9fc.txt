@@ -1,0 +1,4 @@
+BHTTP Tunnel - cliente Android para servidores BHTTP V2 (y modo WebSocket tipo HTTP Custom)
+1) Sube TODO el contenido de esta carpeta a un repositorio de GitHub (rama main).
+2) Pestaña Actions -> "Build APK" -> cuando termine, descarga el artefacto BhttpTunnel-apk (app-debug.apk).
+3) Instala el APK, pon servidor, puerto (BHTTP=443, WS=80), usuario y clave SSH y pulsa CONECTAR.
